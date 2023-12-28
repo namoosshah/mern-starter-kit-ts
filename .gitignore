@@ -1,0 +1,20 @@
+**/node_modules/
+**/coverage/
+**/jest.config.js
+.git/
+**/dist
+**/.env
+server/logs/access.log
+server/public/
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+**/.DS_Store
