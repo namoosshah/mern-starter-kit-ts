@@ -11,11 +11,13 @@ Express.js server with auth module
 - MongoDB via Mongoose v^8.0.3
 - Nodemailer v^6.9.7
 - Multer v^1.4.5-lts.1
+
   ```
   import { uploader } from "@/utils/uploader"
   uploader().single("avatar") or uploader("users").single("avatar")
   takes directory as optional param for grouping
   ```
+
 - jsonwebtoken v^9.0.2
 - bcryptjs v^2.4.3
 - cors v^2.8.5
@@ -101,5 +103,18 @@ POST /reset-password
     "email": "john.doe@example.com",
     "token": "6d11ad016cb86960cf63ae07f12610cfa0d886fcf124b0897fe4988ef0ea40ef",
     "password": "P@sswor8"
+}
+```
+
+###### Update Profile
+
+```sh
+Authorization: Bearer [JWT Token]
+Content-Type: multipart/form-data
+
+PUT /profile
+{
+    "name": "Jane Doe",
+    "avatar": [image file] // optional
 }
 ```
