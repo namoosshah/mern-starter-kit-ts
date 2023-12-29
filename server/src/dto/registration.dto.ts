@@ -2,7 +2,7 @@ import { ObjectSchema, object, string } from "yup";
 import { isUniqueUser } from "@/models/user";
 import { isPasswordValid } from "@/utils/passwordValidator";
 
-interface IRegistrationDTO {
+export interface IRegistrationDTO {
   name: string;
   email: string;
   password: string;

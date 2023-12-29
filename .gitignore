@@ -1,9 +1,9 @@
 **/node_modules/
-**/coverage/
 **/jest.config.js
 .git/
 **/dist
 **/.env
+!**/.env.example
 server/logs/access.log
 server/public/
 

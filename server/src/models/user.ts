@@ -1,13 +1,14 @@
 import { Schema, Document, model, Model } from "mongoose";
 import bcrypt from "bcryptjs";
+import { findByEmail } from "@/services/user";
 
 export interface IUser extends Document {
-  _id: Schema.Types.ObjectId;
+  _id: string;
   name: string;
   email: string;
   password: string;
   resetPasswordToken?: string;
-  resetTokenExpiry?: Date;
+  resetTokenExpiry?: Date | null;
   avatar?: string;
   createdAt: Date;
   updatedAt: Date;
@@ -30,7 +31,6 @@ const userSchema = new Schema<IUser>(
       type: String,
       required: [true, "Password is required"],
       minlength: [8, "Please use minimum of 8 characters"],
-      select: false,
     },
     resetPasswordToken: String,
     resetTokenExpiry: Date,
@@ -56,6 +56,6 @@ export const User: Model<IUser> = model<IUser>("User", userSchema);
 
 /* Check if user email already exists */
 export const isUniqueUser = async (email: string) => {
-  const user = await User.findOne({ email });
+  const user = await findByEmail(email);
   return !user;
 };

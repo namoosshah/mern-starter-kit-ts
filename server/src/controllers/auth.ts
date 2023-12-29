@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import bcrypt from "bcryptjs";
 import crypto from "crypto";
-import { User, IUser } from "@/models/user";
+import { IUser } from "@/models/user";
 import { ErrorResponse } from "@/utils/errorResponse";
 import { generateJWTToken } from "@/utils/token";
 import { sendMail } from "@/utils/mail";
@@ -9,6 +9,11 @@ import { readFileSync } from "fs";
 import { paths } from "@paths";
 import { join } from "path";
 import { userResource } from "@/resources/userResource";
+import {
+  findByEmail,
+  findByEmailAndToken,
+  registerUser,
+} from "@/services/user";
 
 /* Register */
 export const register = async (
@@ -16,14 +21,9 @@ export const register = async (
   res: Response,
   next: NextFunction
 ) => {
-  const { name, email, password } = req.body;
   try {
-    const user: IUser = await User.create({
-      name,
-      email,
-      password,
-    });
-    res.json({
+    const user: IUser | null = await registerUser(req.body);
+    res.status(201).json({
       statusCode: 201,
       message: "Account registered successfully",
       data: {
@@ -43,9 +43,7 @@ export const login = async (
 ) => {
   const { email, password } = req.body;
   try {
-    const user: IUser = await User.findOne({
-      email,
-    }).select("+password");
+    const user: IUser | null = await findByEmail(email);
 
     if (!user) {
       return next(new ErrorResponse("Invalid Credentials", 401));
@@ -75,7 +73,7 @@ export const forgotPassword = async (
 ) => {
   const { email } = req.body;
   try {
-    let user = await User.findOne({ email });
+    let user = await findByEmail(email);
     if (user == null) {
       return res.status(400).json({
         statusCode: 400,
@@ -129,11 +127,7 @@ export const resetPassword = async (
 ) => {
   const { email, token, password } = req.body;
   try {
-    let user = await User.findOne({
-      email,
-      resetPasswordToken: token,
-      resetTokenExpiry: { $gt: Date.now() },
-    });
+    let user = await findByEmailAndToken(email, token);
     if (user == null) {
       return res.status(400).json({
         statusCode: 400,

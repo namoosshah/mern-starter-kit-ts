@@ -38,11 +38,12 @@ app.use(
 app.use(cors());
 
 /* Routes */
-app.use("/api", router, errorHandler);
+app.use("/api/v1", router, errorHandler);
 
 /* Mongo Database Connection */
-mongoose.connect(process.env.MONGO_CONNECTION_URL!).catch((err) => {
-  console.log(`Unable to connect to db: ${err}`);
-});
-
+if (process.env.NODE_ENV !== "test") {
+  mongoose.connect(process.env.MONGO_CONNECTION_URL!).catch((err) => {
+    console.log(`Unable to connect to db: ${err}`);
+  });
+}
 export default app;

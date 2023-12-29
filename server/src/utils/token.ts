@@ -1,5 +1,6 @@
 import jwt from "jsonwebtoken";
-import { IUser, User } from "@/models/user";
+import { IUser } from "@/models/user";
+import { findById } from "@/services/user";
 
 export type JWTToken = {
   id: string;
@@ -25,9 +26,7 @@ export const verifyJWTToken = async (token: string): Promise<IUser | null> => {
   const secret = process.env.JWT_SECRET || "";
   try {
     const decoded = await jwt.verify(token, secret);
-    return await User.findOne<IUser>({
-      _id: (decoded as JWTToken).id,
-    });
+    return await findById((decoded as JWTToken).id);
   } catch (err) {}
   return null;
 };

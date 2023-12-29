@@ -4,10 +4,11 @@
   "description": "",
   "main": "src/server.ts",
   "scripts": {
-    "build": "npx tsc",
-    "start": "node -r ts-node/register/transpile-only -r tsconfig-paths/register dist/src/server.js",
-    "dev": "nodemon src/server.ts",
-    "test": "jest --coverage"
+    "clean": "rm -rf dist",
+    "build": "cross-env NODE_ENV=production npm run clean && npx tsc -p tsconfig.build.json",
+    "start": "npm run build && node -r ts-node/register/transpile-only -r tsconfig-paths/register dist/src/server.js",
+    "dev": "cross-env NODE_ENV=development nodemon src/server.ts",
+    "test": "cross-env NODE_ENV=test jest"
   },
   "keywords": [],
   "author": "Syed Namoos Ali Shah",

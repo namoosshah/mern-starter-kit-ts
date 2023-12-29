@@ -1,13 +1,12 @@
 {
   "compilerOptions": {
-    /* Visit https://aka.ms/tsconfig to read more about this file */
     "target": "es2016",
     "module": "commonjs",
     "moduleResolution": "node",
-    "baseUrl": "./src",
+    "baseUrl": "./",
     "paths": {
-      "@/*": ["./*"],
-      "@paths": ["./../paths.ts"]
+      "@/*": ["src/*"],
+      "@paths": ["paths.ts"]
     },
     "outDir": "./dist",
     "checkJs": true,
@@ -16,19 +15,15 @@
     "strict": true,
     "strictNullChecks": true,
     "noImplicitAny": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "noEmit": true,
+    "allowJs": true,
+    "types": ["@types/jest"]
   },
   "ts-node": {
     "require": ["tsconfig-paths/register"]
   },
-  "files": ["global.d.ts"],
-  "include": ["src/**/*.ts", "config/**/*.ts", "global.d.ts"],
-  "exclude": [
-    "node_modules",
-    "**/*.spec.ts",
-    "**/*.test.ts",
-    "./coverage",
-    "__tests__",
-    "jest.config.js"
-  ]
+  "files": ["typings/global.d.ts"],
+  "include": ["src/**/*.ts", "config/**/*.ts", "typings"],
+  "exclude": ["node_modules"]
 }
