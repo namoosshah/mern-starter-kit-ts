@@ -24,6 +24,7 @@ Express.js server with auth module
 - yup v^1.3.3 - for validation
 - morgan v^1.10.0 - for logging
 - helmet v^7.1.0 - for security
+- jest v^29.7.0 - for testing - dev dependency
 
 ##### Environment
 
@@ -117,4 +118,38 @@ PUT /profile
     "name": "Jane Doe",
     "avatar": [image file] // optional
 }
+```
+
+### Get Started
+
+#### Server
+
+```sh
+cd server
+```
+
+then run the following commands as needed.
+
+To install node modules
+
+```sh
+npm install
+```
+
+Start development server
+
+```sh
+npm run dev
+```
+
+Run tests
+
+```sh
+npm run test
+```
+
+Generate build
+
+```sh
+npm run build
 ```
