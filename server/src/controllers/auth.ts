@@ -44,7 +44,6 @@ export const login = async (
   const { email, password } = req.body;
   try {
     const user: IUser | null = await findByEmail(email);
-
     if (!user) {
       return next(new ErrorResponse("Invalid Credentials", 401));
     }
@@ -53,7 +52,7 @@ export const login = async (
       return next(new ErrorResponse("Invalid Credentials", 401));
     }
     const token = await generateJWTToken(user);
-    res.json({
+    res.status(200).json({
       statusCode: 200,
       data: {
         user: userResource(user),
@@ -109,7 +108,7 @@ export const forgotPassword = async (
 
     sendMail(from, user.email, "Reset Password", html);
 
-    return res.json({
+    return res.status(200).json({
       statusCode: 200,
       message:
         "Password reset link has been send successfully to your provided email",
@@ -139,7 +138,7 @@ export const resetPassword = async (
     user.resetPasswordToken = "";
     await user.save();
 
-    return res.json({
+    return res.status(200).json({
       statusCode: 200,
       message: "Password updated successfully",
     });
